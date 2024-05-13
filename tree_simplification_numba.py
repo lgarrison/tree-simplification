@@ -13,6 +13,7 @@ def simplify_tree_iterative(desc, nprog):
     dirty = True
     while dirty:
         dirty = False
+        # A smarter numba version could modify desc during iteration
         for hid in set(desc):
             if hid not in desc:
                 continue
