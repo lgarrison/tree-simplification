@@ -10,19 +10,19 @@ def simplify_tree_iterative(desc, nprog):
     with an edge, using an iterative algorithm.
     """
 
-    dirty = True
-    while dirty:
-        dirty = False
-        # A smarter numba version could modify desc during iteration
-        for hid in set(desc):
-            if hid not in desc:
-                continue
-            d = desc[hid]
-            if nprog.get(d, 0) == 1 and d in desc:
-                desc[hid] = desc[d]
-                del desc[d], nprog[d]
-                dirty = True
-
+    i = 0
+    hids = list(desc)
+    while i < len(hids):
+        hid = hids[i]
+        if hid not in desc:
+            i += 1
+            continue
+        d = desc[hid]
+        if nprog.get(d, 0) == 1 and d in desc:
+            desc[hid] = desc[d]
+            del desc[d], nprog[d]
+        else:
+            i += 1
 
 def print_tree(desc, nprog):
     print("Tree:")
